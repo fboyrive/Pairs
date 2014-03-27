@@ -46,7 +46,11 @@ public class Play {
 						game.endClock();
 						printGameStateTerminal(game);
 					}
-					catch(Exception ie){}
+					catch(Exception ie){
+						System.out.print (ie);
+						game.endClock();
+						printGameStateTerminal(game);
+					}
 				}
 			}
 			System.out.println("***** End *****");
