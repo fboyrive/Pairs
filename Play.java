@@ -20,7 +20,7 @@ public class Play {
 
 		public static void main(String[] args) {
 			Scanner sc = new Scanner(System.in);
-			SetOfCards game = new SetOfCards();
+			SetOfCards game = new SetOfCards(1); // playing latin letters
 			
 			System.out.println(game);
 			game.shakeMatrix();
