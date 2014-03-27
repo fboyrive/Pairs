@@ -4,17 +4,25 @@ public class SetOfCards {
     	final static int cardsPerRow = 4;
     	private Card[][] card_matrix = new Card[cardsPerLine][cardsPerRow];
     	private int numberOfTries;
+    	private int numberOfSuccess;
     	private Card[] tempCard = new Card[2];
     	private boolean clock;
     
-    	SetOfCards () {
+    	SetOfCards (int option) {
+    		// option == 1 => SetOfLatinLetters
+    		// option == 2 => SetOfLatinWords
+    		// ...
+
 	    	for (int i=0 ; i<cardsPerRow ; i++) {   
 		    	for(int j=0 ; j<cardsPerLine ; j=j+2) {
-		    		card_matrix[i][j]= new Card();
-		    		card_matrix[i][j+1]= new Card(card_matrix[i][j].getCardString());
+		    		if (option == 1) {
+		    			card_matrix[i][j]= new LatinLetter();
+		    			card_matrix[i][j+1]= new LatinLetter (card_matrix[i][j].getCardString());
+		    		}
 		    	}
 	    	}
 	    	this.numberOfTries = 0;
+	    	this.numberOfSuccess = 0;
 	    	this.clock=false;
     	}
     
@@ -54,13 +62,7 @@ public class SetOfCards {
     	}
     
     	public boolean win() {
-	    	for (int i=0 ; i<cardsPerRow ; i++) {   
-			for(int j=0 ; j<cardsPerLine ; j++) {
-		    		if (card_matrix[i][j].isHidden())
-		    		return false;
-		    	}
-	    	}
-	    	return true;
+    		return (this.numberOfSuccess==(cardsPerLine*cardsPerRow/2));
     	}
       
     	public boolean click1 (int x, int y) {
@@ -85,6 +87,7 @@ public class SetOfCards {
     			numberOfTries++;
     			if (card_matrix[x][y].getCardString().compareTo(tempCard[0].getCardString())==0) {
     				tempCard[0]=null;
+    				this.numberOfSuccess++;
     			}
     			else {
     				clock=true;
