@@ -30,10 +30,7 @@ public class LatinWord extends Card {
         }
         
         randomNumber = (int) (Math.random() * lineCount);
-        while (word_list[randomNumber].equals("this word has been used"))
-        {
-            randomNumber = (int) (Math.random() * lineCount);
-        }
+        while (word_list[randomNumber].equals("this word has been used")) randomNumber = (int) (Math.random() * lineCount);
         
         super.cardString = word_list[randomNumber];
         word_list[randomNumber]="this word has been used";
