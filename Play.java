@@ -18,9 +18,13 @@ public class Play {
 				System.out.println("\nAt this time, you have not win yet.");
 		}
 
+		
 		public static void main(String[] args) {
 			Scanner sc = new Scanner(System.in);
 			SetOfCards game = new SetOfCards(1); // playing latin letters
+			
+			//GUI Window
+			WindowGame gameWindow = new WindowGame(game);
 			
 			System.out.println(game);
 			game.shakeMatrix();
@@ -35,21 +39,25 @@ public class Play {
 					System.out.print("Error, case numbers: ");
 				}
 				printGameStateTerminal(game);
+				gameWindow.refreshWindow();
 				System.out.print("Case numbers: ");
 				while (!game.click2(sc.nextInt(), sc.nextInt())) {
 					System.out.print("Error, case numbers: ");
 				}
 				printGameStateTerminal(game);
+				gameWindow.refreshWindow();
 				if (game.getClock()) {
 					try {
 						Thread.sleep(2000); //sleep for 2s
 						game.endClock();
 						printGameStateTerminal(game);
+						gameWindow.refreshWindow();
 					}
 					catch(Exception ie){
-						System.out.println (ie);
+						System.out.println(ie);
 						game.endClock();
 						printGameStateTerminal(game);
+						gameWindow.refreshWindow();
 					}
 				}
 			}
