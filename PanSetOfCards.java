@@ -13,7 +13,7 @@ public class PanSetOfCards extends JPanel {
 	
 	public PanSetOfCards(SetOfCards game) {
 		super();
-		super.setBackground(Color.LIGHT_GRAY);
+		super.setBackground(Color.GRAY);
 		this.font = new Font("Courier", Font.BOLD, 40);
 		this.game = game;
 	}
