@@ -14,7 +14,7 @@ public class PanSetOfCards extends JPanel {
 	public PanSetOfCards(SetOfCards game) {
 		super();
 		super.setBackground(Color.LIGHT_GRAY);
-		this.font = new Font("Courier", Font.BOLD, 50);
+		this.font = new Font("Courier", Font.BOLD, 40);
 		this.game = game;
 	}
 	
@@ -36,7 +36,7 @@ public class PanSetOfCards extends JPanel {
 						g.drawImage(imgHidden, i*160, j*160, this);
 					else {
 						g.drawImage(imgDiscover, i*160, j*160, this);
-						g.drawString(matrix[i][j], i*160+55, j*160+85);
+						g.drawString(matrix[i][j], i*160+72 - matrix[i][j].length()*12, j*160+85);
 					}
 				}
 			}
