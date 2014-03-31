@@ -19,6 +19,10 @@ public class SetOfCards {
 		    			card_matrix[i][j]= new LatinLetter();
 		    			card_matrix[i][j+1]= new LatinLetter (card_matrix[i][j].getCardString());
 		    		}
+		    		else if (option==2) {
+		    			card_matrix[i][j]= new LatinWord();
+		    			card_matrix[i][j+1]= new LatinWord (card_matrix[i][j].getCardString());
+		    		}
 		    	}
 	    	}
 	    	this.numberOfTries = 0;
