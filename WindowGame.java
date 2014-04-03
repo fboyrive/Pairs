@@ -10,9 +10,9 @@ public class WindowGame extends JFrame {
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setResizable(false);
 	    
-	    this.setVisible(true);
 	    this.pan = new PanSetOfCards(game);
 	    this.setContentPane(pan);
+	    this.setVisible(true);
     }
 	
 	public void refreshWindow() {
