@@ -45,6 +45,7 @@ public class PanSetOfCardsMouseListener implements MouseListener {
 	        else if (!waitForClick1 && game.click2(x, y)) { // waitForClick2
 	        	waitForClick1 = true;
 	        	pan.repaint();
+	        	MenuFrame.updateMenuPanel();
 	        	if (game.getClock())
 	        		this.t.start();
 	        	else if (game.win())
