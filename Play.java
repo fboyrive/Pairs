@@ -5,7 +5,7 @@ public class Play {
 		public static void printGameStateTerminal (SetOfCards game) {
 			String[][] matrix = game.getMatrix();
 			
-			System.out.println("\nNumber of Tries: "+game.getNumberOfTries()+"\n");
+			System.out.println("\nNumber of Tries: "+game.numberOfTries[game.player]+"\n");
 	    		for (int i=0 ; i<matrix.length ; i++) {   
 			    	for(int j=0 ; j<matrix[i].length ; j++) {
 			    		System.out.printf("%10s", matrix[i][j]);
@@ -24,7 +24,11 @@ public class Play {
 			SetOfCards game = new SetOfCards(1); // playing latin letters
 			
 			//GUI Window
+                        MenuFrame menuPanel = new MenuFrame();
+                        menuPanel.setVisible(true);
+                        menuPanel.updateMenuPanel();
 			WindowGame gameWindow = new WindowGame(game);
+                        
 			
 			System.out.println(game);
 			game.shakeMatrix();
@@ -60,6 +64,7 @@ public class Play {
 						gameWindow.refreshWindow();
 					}
 				}
+                                menuPanel.updateMenuPanel();
 			}
 			System.out.println("***** End *****");
 		}
