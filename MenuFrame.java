@@ -187,7 +187,7 @@ public class MenuFrame extends javax.swing.JFrame {
         });
     }
     
-    public void updateMenuPanel()
+    static public void updateMenuPanel()
     {
         attemptsLabelP1.setText(""+ SetOfCards.numberOfTries[1]);
         successLabelP1.setText(""+ SetOfCards.numberOfSuccess[1]);
@@ -217,23 +217,24 @@ public class MenuFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JLabel ActiveP1;
-    private javax.swing.JLabel ActiveP2;
-    private javax.swing.JLabel Player1;
-    private javax.swing.JLabel Player2;
-    private javax.swing.JLabel aP1;
-    private javax.swing.JLabel aP2;
-    private javax.swing.JLabel attemptsLabelP1;
-    private javax.swing.JLabel attemptsLabelP2;
-    private javax.swing.JLabel fP1;
-    private javax.swing.JLabel fP2;
-    private javax.swing.JLabel failuresLabelP1;
-    private javax.swing.JLabel failuresLabelP2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel sP1;
-    private javax.swing.JLabel sP2;
-    private javax.swing.JLabel successLabelP1;
-    private javax.swing.JLabel successLabelP2;
+    static private javax.swing.JLabel ActiveP1;
+    static private javax.swing.JLabel ActiveP2;
+    static private javax.swing.JLabel Player1;
+    static private javax.swing.JLabel Player2;
+    static private javax.swing.JLabel aP1;
+    static private javax.swing.JLabel aP2;
+    static private javax.swing.JLabel attemptsLabelP1;
+    static private javax.swing.JLabel attemptsLabelP2;
+    static private javax.swing.JLabel fP1;
+    static private javax.swing.JLabel fP2;
+    static private javax.swing.JLabel failuresLabelP1;
+    static private javax.swing.JLabel failuresLabelP2;
+    static private javax.swing.JButton jButton1;
+    static private javax.swing.JButton jButton2;
+    static private javax.swing.JLabel sP1;
+    static private javax.swing.JLabel sP2;
+    static private javax.swing.JLabel successLabelP1;
+    static private javax.swing.JLabel successLabelP2;
     // End of variables declaration                   
 }
+
