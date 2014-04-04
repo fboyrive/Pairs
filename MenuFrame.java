@@ -1,7 +1,8 @@
 import java.awt.Color;
 public class MenuFrame extends javax.swing.JFrame {
 
-    /**
+	private static final long serialVersionUID = 1L;
+	/**
      * Creates new form MenuPanel
      */
     public MenuFrame() {
@@ -39,7 +40,7 @@ public class MenuFrame extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAutoRequestFocus(false);
+        requestFocus(false);
 
         aP1.setText("Number of attempts:");
 
