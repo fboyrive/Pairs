@@ -1,3 +1,4 @@
+
 public class SetOfCards {
 
     	private Card[][] card_matrix = new Card[Constants.cardsPerColumn][Constants.cardsPerRow];
@@ -94,6 +95,7 @@ public class SetOfCards {
     				numberOfFailures[player]++;
     				if(twoPlayers==true) changePlayer();
     			}
+                        MenuFrame.updateMenuPanel();
     			return true;
     		}
     	}
