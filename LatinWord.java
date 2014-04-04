@@ -4,9 +4,8 @@ import java.util.Scanner;
 
 
 public class LatinWord extends Card {
-        static int MAX_WORDS=100;
         static int lineCount=0;
-        static String [] word_list= new String[MAX_WORDS];
+        static String [] word_list= new String[Constants.MaxLinesFile];
 
         LatinWord () {	        
 	        // First initialisation
@@ -20,7 +19,7 @@ public class LatinWord extends Card {
 		            do {
 			            word_list[lineCount]= scan.nextLine();
 			            lineCount++;
-		            } while (scan.hasNextLine());
+		            } while (scan.hasNextLine() && lineCount < Constants.MaxLinesFile);
 		            scan.close();
 		            
 		        } catch (FileNotFoundException ex) {
