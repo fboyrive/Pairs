@@ -16,15 +16,17 @@ public class WindowGame extends JFrame {
     }
 	
 	public static void main(String[] args) {
-		// option 1: LatinLetters
-		// option 2: LatinWords
-		SetOfCards game = new SetOfCards(2);
+		// First parameter 1: Playing LatinLetters
+		// First parameter 2: Playing LatinWords
+		// Second Parameter : true for two players, false for one
+		
+		SetOfCards game = new SetOfCards(2, false);
 		game.shakeMatrix();
 		
 		//GUI Window
 		MenuFrame menuPanel = new MenuFrame();
 		menuPanel.setVisible(true);
-		menuPanel.updateMenuPanel();
+		MenuFrame.updateMenuPanel();
 		new WindowGame(game);
 	}
 }
