@@ -4,12 +4,12 @@ public class SetOfCards {
     	private Card[] tempCard = new Card[2];
     	private boolean clock;
     	static int[] numberOfTries = new int[3], numberOfSuccess= new int[3], numberOfFailures= new int[3]; //[1]=p1, [2]=p2, just set to 3 values for easy of reading
-    	static int player= 1;
-    	static boolean twoPlayers= true;
+    	static int player = 1;
+    	static boolean twoPlayers = true;
 
 
     
-    	SetOfCards (int option) {
+    	SetOfCards (int option, boolean twoPlay) {
     		// option == 1 => SetOfLatinLetters
     		// option == 2 => SetOfLatinWords
     		// ...
@@ -27,6 +27,7 @@ public class SetOfCards {
 		    	}
 	    	}
 	    	this.clock=false;
+	    	twoPlayers = twoPlay;
     	}
     
     	public void shakeMatrix () {
