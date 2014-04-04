@@ -38,9 +38,9 @@ public class PanSetOfCards extends JPanel {
 			for (int i=0 ; i<matrix.length ; i++) {
 				for (int j=0 ; j<matrix[i].length; j++) {
 					if (matrix[i][j].compareTo("null") == 0)
-						g.drawImage(imgHidden, i*Constants.cardSize, j*Constants.cardSize, this);
+						g.drawImage(imgHidden, i*Constants.cardSize, j*Constants.cardSize, Constants.cardImageSize, Constants.cardImageSize, this);
 					else {
-						g.drawImage(imgDiscover, i*Constants.cardSize, j*Constants.cardSize, this);
+						g.drawImage(imgDiscover, i*Constants.cardSize, j*Constants.cardSize, Constants.cardImageSize, Constants.cardImageSize, this);
 						int textPositionX = i*Constants.cardSize + Constants.cardSize/2 - (int) ((matrix[i][j].length()+1)*Constants.cardsFontSize/3.3);
 						int textPositionY = j*Constants.cardSize + Constants.cardSize/2 + Constants.cardsFontSize/6;
 						g.drawString(matrix[i][j],  textPositionX , textPositionY);
