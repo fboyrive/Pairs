@@ -3,10 +3,11 @@ public class SetOfCards {
     	final static int cardsPerLine = 4;
     	final static int cardsPerRow = 4;
     	private Card[][] card_matrix = new Card[cardsPerLine][cardsPerRow];
-    	private int numberOfTries;
-    	private int numberOfSuccess;
+        static int[] numberOfTries = new int[3], numberOfSuccess= new int[3], numberOfFailures= new int[3]; //[1]=p1, [2]=p2, just set to 3 values for easy of reading
     	private Card[] tempCard = new Card[2];
     	private boolean clock;
+        static int player= 1;
+        static boolean twoPlayers= true;
     
     	SetOfCards (int option) {
     		// option == 1 => SetOfLatinLetters
@@ -22,11 +23,10 @@ public class SetOfCards {
 		    		else if (option==2) {
 		    			card_matrix[i][j]= new LatinWord();
 		    			card_matrix[i][j+1]= new LatinWord (card_matrix[i][j].getCardString());
+                                        
 		    		}
 		    	}
 	    	}
-	    	this.numberOfTries = 0;
-	    	this.numberOfSuccess = 0;
 	    	this.clock=false;
     	}
     
@@ -61,12 +61,9 @@ public class SetOfCards {
 	    	return matrix;
     	}
     
-    	public int getNumberOfTries() {
-    		return this.numberOfTries;
-    	}
     
     	public boolean win() {
-    		return (this.numberOfSuccess==(cardsPerLine*cardsPerRow/2));
+    		return (this.numberOfSuccess[1]==(cardsPerLine*cardsPerRow/2));
     	}
       
     	public boolean click1 (int x, int y) {
@@ -88,15 +85,19 @@ public class SetOfCards {
     			return false;
     		else {
 				card_matrix[x][y].discover();
-    			numberOfTries++;
-    			if (card_matrix[x][y].getCardString().compareTo(tempCard[0].getCardString())==0) {
+    			
+                        numberOfTries[player]++;
+    			
+                        if (card_matrix[x][y].getCardString().compareTo(tempCard[0].getCardString())==0) {
     				tempCard[0]=null;
-    				this.numberOfSuccess++;
+    				numberOfSuccess[player]++;
     			}
     			else {
     				clock=true;
     				tempCard[1]=card_matrix[x][y];
-    			}
+                                numberOfFailures[player]++;
+                                if(twoPlayers==true) changePlayer();
+                        }
     			return true;
     		}
     	}
@@ -125,4 +126,9 @@ public class SetOfCards {
 	    	}
 	    	return print;
     	}
+    
+    private void changePlayer() {
+        if (player==1)player=2;
+        else player=1; 
+    }
 }
