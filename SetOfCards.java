@@ -62,7 +62,7 @@ public class SetOfCards {
     	}
     
     	public boolean win() {
-    		return (numberOfSuccess[1]==(Constants.cardsPerColumn*Constants.cardsPerRow/2));
+    		return (numberOfSuccess[1]+numberOfSuccess[2]==(Constants.cardsPerColumn*Constants.cardsPerRow/2));
     	}
       
     	public boolean click1 (int x, int y) {
