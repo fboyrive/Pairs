@@ -22,14 +22,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.event.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.border.CompoundBorder;
@@ -43,6 +42,8 @@ import javax.swing.JLabel;
 
 
 public class PanOptions extends PanBackground implements ActionListener{
+// Option menu of the main panel, handeling different options and choice from the user
+	
 	private static final long serialVersionUID = -4096127076126433656L;
 	
     private Font font;
@@ -50,6 +51,7 @@ public class PanOptions extends PanBackground implements ActionListener{
     private InputStream is;
     private final int sizeChar = 30;
     private String name_font;
+    private JPanel panCenter;
    
     private JPanel panPlayer;
     private JPanel panNoCards;
@@ -78,7 +80,7 @@ public class PanOptions extends PanBackground implements ActionListener{
     public PanOptions(WinMain main_frame){
         
         super(main_frame, false);
-        
+        panCenter = this.getPanCenter();
         //loading the font
         name_font = new String("EraserRegular.ttf");
         try{
@@ -87,21 +89,19 @@ public class PanOptions extends PanBackground implements ActionListener{
                 font = Font.createFont(Font.TRUETYPE_FONT, is);
                 font = font.deriveFont(Font.BOLD, sizeChar);
             }catch(Exception ie){
-                ie.printStackTrace();
-                System.err.println(name_font + " not loaded.  Using TimesRoman font.");
-                font = new Font("TimesRoman",Font.BOLD,sizeChar);
+            	JOptionPane.showMessageDialog(null, "Some fonts cannot be load, using 'Arial' instead","Inane warning",JOptionPane.WARNING_MESSAGE);
+                font = new Font("Arial",Font.BOLD,sizeChar);
             }
         }catch(IOException e){
-            e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Some fonts cannot be load, using 'Arial' instead","Inane warning",JOptionPane.WARNING_MESSAGE);
+            font = new Font("Arial",Font.BOLD,sizeChar);
         }
         initPanOptions();
     }
     
     private void initPanOptions(){
+    // Initialisation of the option menu
         group = new ButtonGroup();
-        
-        
-        //setting of the options panel
         panCenter.setLayout(new BorderLayout(10,10));
         panCenter.setBackground(new Color(0,0,0,0));
          title = new JLabel("OPTIONS");
@@ -351,7 +351,6 @@ public class PanOptions extends PanBackground implements ActionListener{
                         Constants.typeOfCardsOption = 4;
                     }
             };
-        
         
         latinLetters.addActionListener(actionListener);
         latinWords.addActionListener(actionListener);
