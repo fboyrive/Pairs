@@ -1,3 +1,17 @@
+/*
+ * The University of Hong Kong
+ * Project Course ELEC 1503/2543 
+ * 
+ **** Pairs ****
+ * Authors:
+ * 	- Florian Boyrivent
+ *  - Ian Cook
+ *  - Lucie Thomas
+ * 
+ * Version 1.0 (04/05/2014)
+ * All rights reserved
+ */
+
 package hku.view;
 
 import hku.game.*;
@@ -31,16 +45,11 @@ import javax.swing.JLabel;
 public class PanOptions extends PanBackground implements ActionListener{
 	private static final long serialVersionUID = -4096127076126433656L;
 	
-    private WinMain main_frame;
     private Font font;
     private JLabel title;
     private InputStream is;
-    private Color c = Color.WHITE;
-    private int adv = 115;
-    private int hgt = 20;
-    private int sizeChar = 30;
+    private final int sizeChar = 30;
     private String name_font;
-    private JPanel panCenter;
    
     private JPanel panPlayer;
     private JPanel panNoCards;
@@ -50,27 +59,33 @@ public class PanOptions extends PanBackground implements ActionListener{
     
     private JRadioButton twos;
     private JRadioButton fours;
-    private JRadioButton sixs;
+    private JRadioButton five;
     
     private JRadioButton latinLetters;
     private JRadioButton latinWords;
     private JRadioButton math1;
     private JRadioButton math2;
     
+    private Border margin = BorderFactory.createEmptyBorder(0, 35, 40, 0);
+    private Border border1 = BorderFactory.createLineBorder(Color.WHITE, 2);
+    private Border border = new CompoundBorder(margin, border1);
+    private TitledBorder borderPlayer = BorderFactory.createTitledBorder(border,"No. of Player", TitledBorder.LEFT,TitledBorder.TOP, font, Color.WHITE );
+        
+    private ButtonGroup group;
+    
+    private ActionListener actionListener;
     
     public PanOptions(WinMain main_frame){
         
         super(main_frame, false);
-        panCenter = this.getPanCenter();
-        this.main_frame = main_frame;
         
+        //loading the font
         name_font = new String("EraserRegular.ttf");
         try{
             is = new FileInputStream(name_font);
             try{
                 font = Font.createFont(Font.TRUETYPE_FONT, is);
                 font = font.deriveFont(Font.BOLD, sizeChar);
-                //font.setBackground(new Color(0,0,0,0));
             }catch(Exception ie){
                 ie.printStackTrace();
                 System.err.println(name_font + " not loaded.  Using TimesRoman font.");
@@ -83,44 +98,55 @@ public class PanOptions extends PanBackground implements ActionListener{
     }
     
     private void initPanOptions(){
-        panCenter.setLayout(new BorderLayout(10,10));
+        group = new ButtonGroup();
         
+        
+        //setting of the options panel
+        panCenter.setLayout(new BorderLayout(10,10));
         panCenter.setBackground(new Color(0,0,0,0));
-         title = new JLabel("Options"); 
-         Border margin = BorderFactory.createEmptyBorder(30, 200, 20, 0);
-         title.setBorder(margin);
+         title = new JLabel("OPTIONS");
+         title.setBorder(Constants.marginTitle);
          title.setFont(font);
          title.setForeground(Color.WHITE);
          panCenter.add(title, BorderLayout.NORTH);
          font = font.deriveFont(Font.BOLD, 12);
+         
+         //adding 3 zones with radio buttons
          addPanNoPlayer();
          addPanNoCards();
          addPanTypeCards();
     }
     
+    /*this function adds on the left of the panCenter a set of radio buttons to choose the number of player*/
     private void addPanNoPlayer(){
+        //settings of the panel that contains the radio button that sets the number of players
         panPlayer = new JPanel();
         panPlayer.setLayout(new BoxLayout(panPlayer, BoxLayout.Y_AXIS));
         panPlayer.setPreferredSize(new Dimension(200,80));
         
-        Border margin = BorderFactory.createEmptyBorder(0, 35, 40, 0);
-        Border border1 = BorderFactory.createLineBorder(Color.WHITE, 2);
-        Border border = new CompoundBorder(margin, border1);
-        TitledBorder borderPlayer = BorderFactory.createTitledBorder(border,"No. of Player", TitledBorder.LEFT,TitledBorder.TOP, font, Color.WHITE );
+        //the margin is used to place the new panel
+        margin = BorderFactory.createEmptyBorder(0, 35, 40, 0);
+        border = new CompoundBorder(margin, border1);
+        borderPlayer = BorderFactory.createTitledBorder(border,"No. of Player", TitledBorder.LEFT,TitledBorder.TOP, font, Color.WHITE );
         borderPlayer.setTitleFont(font);
         borderPlayer.setTitleColor(Color.WHITE);
         panPlayer.setBackground(new Color(0,0,0,0));
         panPlayer.setBorder(borderPlayer);
         
-        
-        onePlayer = new JRadioButton("Single Player");
+        // The following lines are used to implement every radio buttons and define their settings
+        onePlayer = new JRadioButton("SiNgle Player");
         onePlayer.setForeground(Color.WHITE);
-        onePlayer.setBackground(new Color(0,0,0,0));
+        onePlayer.setBackground(Color.BLACK);
+        onePlayer.setOpaque(false);
+        onePlayer.setFocusPainted(false);
+        onePlayer.setMnemonic(KeyEvent.VK_B);
         onePlayer.setActionCommand("Single Player");
         onePlayer.setFont(font);
         twoPlayer = new JRadioButton("Two Players");
         twoPlayer.setForeground(Color.WHITE);
-        twoPlayer.setBackground(new Color(0,0,0,0));
+        twoPlayer.setFocusPainted(false);
+        twoPlayer.setBackground(Color.BLACK);
+        twoPlayer.setOpaque(false);
         twoPlayer.setFont(font);
         
         if(Constants.twoPlayer)
@@ -129,22 +155,15 @@ public class PanOptions extends PanBackground implements ActionListener{
             onePlayer.setSelected(true);
         
         //we group the buttons because we want only one of them to be checked at a time
-        ButtonGroup group = new ButtonGroup();
+        group = new ButtonGroup();
         group.add(onePlayer);
         group.add(twoPlayer);
         
-        ActionListener actionListener;
         
         actionListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //if(e.getSource() ==onePlayer){
-                        if(onePlayer.isSelected()){
-                        Constants.twoPlayer = false;
-                        
-                    }
-                    else
-                        Constants.twoPlayer = true;
+                    Constants.twoPlayer = !onePlayer.isSelected();
                     }
             };
         
@@ -155,124 +174,145 @@ public class PanOptions extends PanBackground implements ActionListener{
         onePlayer.addActionListener(actionListener);
         twoPlayer.addActionListener(actionListener);
         
-        
-        
         panCenter.add(panPlayer, BorderLayout.WEST);
     }
     
+    /*this function adds on the middle of the panCenter a set of radio buttons to choose the number of card we want to play with*/
     private void addPanNoCards(){
+        
+        /*settings of the panel that holds the radio buttons*/
         panNoCards = new JPanel();
         panNoCards.setLayout(new BoxLayout(panNoCards, BoxLayout.Y_AXIS));
-        Border margin = BorderFactory.createEmptyBorder(0, 0, 40, 0);
-        Border border1 = BorderFactory.createLineBorder(Color.WHITE, 2);
-        Border border = new CompoundBorder(margin, border1);
+        margin = BorderFactory.createEmptyBorder(0, 0, 40, 0);
+        border = new CompoundBorder(margin, border1);
         panNoCards.setPreferredSize(new Dimension(70,80));
 
-        TitledBorder borderPlayer = BorderFactory.createTitledBorder(border,"No. of Cards", TitledBorder.LEFT,TitledBorder.TOP, font, Color.WHITE );
+        /*settings of the margin that holds the radio buttons*/
+        borderPlayer = BorderFactory.createTitledBorder(border,"No. of Cards", TitledBorder.LEFT,TitledBorder.TOP, font, Color.WHITE );
         borderPlayer.setTitleFont(font);
         borderPlayer.setTitleColor(Color.WHITE);
         panNoCards.setBackground(new Color(0,0,0,0));
         panNoCards.setBorder(borderPlayer);
         
-        
+        /*settings of the radio buttons*/
         twos = new JRadioButton("2x2");
         twos.setForeground(Color.WHITE);
-        twos.setBackground(new Color(0,0,0,0));
+        twos.setBackground(Color.BLACK);
+        twos.setOpaque(false);
+        twos.setFocusPainted(false);
         twos.setFont(font);
         fours = new JRadioButton("4x4");
         fours.setForeground(Color.WHITE);
-        fours.setBackground(new Color(0,0,0,0));
+        fours.setFocusPainted(false);
+        fours.setBackground(Color.BLACK);
+        fours.setOpaque(false);
         fours.setFont(font);
-        sixs = new JRadioButton("6x6");
-        sixs.setForeground(Color.WHITE);
-        sixs.setBackground(new Color(0,0,0,0));
-        sixs.setFont(font);
+        five = new JRadioButton("5x4");
+        five.setFocusPainted(false);
+        five.setForeground(Color.WHITE);
+        five.setBackground(Color.BLACK);
+        five.setOpaque(false);
+        five.setFont(font);
         
-        if(Constants.cardsPerRow == 2)
+        /*defining where the initial button selected should be (according to what has been previously chosen*/
+        if(Constants.cardsPerColumn == 2)
             twos.setSelected(true);
-        else if(Constants.cardsPerRow == 4)
+        else if(Constants.cardsPerColumn == 4)
             fours.setSelected(true);
         else
-            sixs.setSelected(true);
+            five.setSelected(true);
         
         //we group the buttons because we want only one of them to be checked at a time
-        ButtonGroup group = new ButtonGroup();
+        group = new ButtonGroup();
         group.add(twos);
         group.add(fours);
-        group.add(sixs);
-        
-        ActionListener actionListener;
+        group.add(five);
         
         actionListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    //the settings are different for each kind of matrix sizes
                     if(e.getSource() == twos){
                         Constants.cardsPerRow = 2;
                         Constants.cardsPerColumn = 2;
-                        Constants.cardImageSize = 300;
-                        Constants.cardSize = 340;
-                        Constants.cardsFontSize = 50;
+                        Constants.cardImageSize = 290;
+                        Constants.cardSize = 325;
+                        Constants.cardsFontSize = 48;
                     }
                     else if(e.getSource() == fours){
                         Constants.cardsPerRow = 4;
                         Constants.cardsPerColumn = 4;
-                        Constants.cardImageSize = 158;
-                        Constants.cardSize = 175;
-                        Constants.cardsFontSize = 30;
+                        Constants.cardImageSize = 141;
+                        Constants.cardSize = 161;
+                        Constants.cardsFontSize = 28;
                     }
                     else{
-                        Constants.cardsPerRow = 6;
-                        Constants.cardsPerColumn = 6;
-                        Constants.cardImageSize = 100;
-                        Constants.cardSize = 115;
-                        Constants.cardsFontSize = 20;
+                        Constants.cardsPerRow = 4;
+                        Constants.cardsPerColumn = 5;
+                        Constants.cardImageSize = 115;
+                        Constants.cardSize = 130;
+                        Constants.cardsFontSize = 23;
                     }
                     }
             };
         
+        //adding action listener to every radio button
         twos.addActionListener(actionListener);
         fours.addActionListener(actionListener);
-        sixs.addActionListener(actionListener);
+        five.addActionListener(actionListener);
         
+        //adding the button to the centre panel
         panNoCards.add(Box.createRigidArea(new Dimension(20,20)));
         panNoCards.add(twos);
         panNoCards.add(fours);
-        panNoCards.add(sixs);
+        panNoCards.add(five);
         
+        //adding the center panel to the option panel
         panCenter.add(panNoCards, BorderLayout.CENTER);
     }
 
+    /*this function adds on the right of the panCenter a set of radio buttons to choose what type of cards the user wants to play with*/
     private void addPanTypeCards(){
+        
+        //settings of the centre panel
         panTypeCards = new JPanel();
         panTypeCards.setLayout(new BoxLayout(panTypeCards, BoxLayout.Y_AXIS));
         panTypeCards.setPreferredSize(new Dimension(200,80));
-        Border margin = BorderFactory.createEmptyBorder(0, 0, 40, 35);
-        Border border1 = BorderFactory.createLineBorder(Color.WHITE, 2);
-        Border border = new CompoundBorder(margin, border1);
-        TitledBorder borderPlayer = BorderFactory.createTitledBorder(border,"Type Of cards", TitledBorder.LEFT,TitledBorder.TOP, font, Color.WHITE );
+        margin = BorderFactory.createEmptyBorder(0, 0, 40, 35);
+        border = new CompoundBorder(margin, border1);
+        borderPlayer = BorderFactory.createTitledBorder(border,"Type Of cards", TitledBorder.LEFT,TitledBorder.TOP, font, Color.WHITE );
         borderPlayer.setTitleFont(font);
         borderPlayer.setTitleColor(Color.WHITE);
         panTypeCards.setBackground(new Color(0,0,0,0));
         panTypeCards.setBorder(borderPlayer);
         
-        
-        latinLetters = new JRadioButton("Latin Letters");
+        //settings of the radio buttons
+        latinLetters = new JRadioButton("LATIN LETTERS");
         latinLetters.setForeground(Color.WHITE);
-        latinLetters.setBackground(new Color(0,0,0,0));
+        latinLetters.setFocusPainted(false);
+        latinLetters.setBackground(Color.BLACK);
+        latinLetters.setOpaque(false);
         latinLetters.setFont(font);
-        latinWords = new JRadioButton("Latin Words");
+        latinWords = new JRadioButton("LATIN WORDS");
         latinWords.setForeground(Color.WHITE);
-        latinWords.setBackground(new Color(0,0,0,0));
+        latinWords.setFocusPainted(false);
+        latinWords.setBackground(Color.BLACK);
+        latinWords.setOpaque(false);
         latinWords.setFont(font);
         math1 = new JRadioButton("Math level 1");
         math1.setForeground(Color.WHITE);
-        math1.setBackground(new Color(0,0,0,0));
+        math1.setBackground(Color.BLACK);
+        math1.setOpaque(false);
+        math1.setFocusPainted(false);
         math1.setFont(font);
         math2 = new JRadioButton("Math level 2");
         math2.setForeground(Color.WHITE);
-        math2.setBackground(new Color(0,0,0,0));
+        math2.setBackground(Color.BLACK);
+        math2.setOpaque(false);
+        math2.setFocusPainted(false);
         math2.setFont(font);
         
+        //determining what type of cards has been previously selected
         switch (Constants.typeOfCardsOption){
             case 1: 
                 latinLetters.setSelected(true);
@@ -291,13 +331,11 @@ public class PanOptions extends PanBackground implements ActionListener{
         }
         
         //we group the buttons because we want only one of them to be checked at a time
-        ButtonGroup group = new ButtonGroup();
+        group = new ButtonGroup();
         group.add(latinLetters);
         group.add(latinWords);
         group.add(math1);
         group.add(math2);
-        
-        ActionListener actionListener;
         
         actionListener = new ActionListener() {
                 @Override
